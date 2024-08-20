@@ -57,7 +57,64 @@ func boardIsFull() -> Bool{
 }
 
 func victoryAchieved() -> Bool{
-    return horizontalVictory()
+    return horizontalVictory() || verticalVictory() || diagonalVictory()
+}
+
+func diagonalVictory() -> Bool {
+    for column in 0...board.count {
+        if checkDiagonalColumn(column, true, true){
+            return true
+        }
+        if checkDiagonalColumn(column, true, false){
+            return true
+        }
+        if checkDiagonalColumn(column, false, true){
+            return true
+        }
+        if checkDiagonalColumn(column, false, false){
+            return true
+        }
+    }
+    
+    return false
+}
+
+func checkDiagonalColumn(_ columnToCheck: Int, _ moveUp: Bool, _ reverseRows: Bool) -> Bool {
+    var movingColumn = columnToCheck
+    var consecutive = 0
+    
+    if reverseRows{
+        for row in board.reversed(){
+            if movingColumn < row.count && movingColumn >= 0 {
+                if row[movingColumn].tile == currentTurnTile(){
+                    consecutive+=1
+                    if consecutive >= 4{
+                        return true
+                    }
+                }
+                else {
+                    consecutive = 0
+                }
+                movingColumn = moveUp ? movingColumn + 1 : movingColumn - 1
+            }
+        }
+    } else {
+        for row in board{
+            if movingColumn < row.count && movingColumn >= 0 {
+                if row[movingColumn].tile == currentTurnTile(){
+                    consecutive+=1
+                    if consecutive >= 4{
+                        return true
+                    }
+                }
+                else {
+                    consecutive = 0
+                }
+                movingColumn = moveUp ? movingColumn + 1 : movingColumn - 1
+            }
+        }
+    }
+    return false
 }
 
 func horizontalVictory() -> Bool{
@@ -65,6 +122,24 @@ func horizontalVictory() -> Bool{
         var consecutive = 0
         for column in row{
             if column.tile == currentTurnTile(){
+                consecutive+=1
+                if consecutive >= 4{
+                    return true
+                }
+            }
+            else {
+                consecutive = 0
+            }
+        }
+    }
+    return false
+}
+
+func verticalVictory() -> Bool {
+    for column in 0...board.count {
+        var consecutive = 0
+        for row in board{
+            if row[column].tile == currentTurnTile(){
                 consecutive+=1
                 if consecutive >= 4{
                     return true
