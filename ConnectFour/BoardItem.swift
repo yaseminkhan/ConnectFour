@@ -8,33 +8,41 @@
 import Foundation
 import UIKit
 
-enum Tile{
-    case Orange
-    case Purple
+//Enum to represent the state of each tile on the board
+enum Tile {
+    case Yellow
+    case Pink
     case Empty
 }
 
-struct BoardItem{
-    var indexPath: IndexPath!
-    var tile: Tile!
+//Struct to represent each item on the Connect Four board
+struct BoardItem {
+    var indexPath: IndexPath!   //The position of the item in the collection view
+    var tile: Tile! //The current state of the tile (Yellow, Pink, or Empty)
     
-    func orangeTile() -> Bool {
-        return tile == Tile.Orange
+    //Check if the tile is Yellow
+    func yellowTile() -> Bool {
+        return tile == Tile.Yellow
     }
-    func purpleTile() -> Bool {
-        return tile == Tile.Purple
+    
+    //Check if the tile is Pink
+    func pinkTile() -> Bool {
+        return tile == Tile.Pink
     }
+    
+    //Check if the tile is Empty
     func emptyTile() -> Bool {
         return tile == Tile.Empty
     }
     
-    func tileColor() -> UIColor{
-        if orangeTile(){
-            return .systemOrange
+    //Return the color associated with the current tile state
+    func tileColor() -> UIColor {
+        if yellowTile() {
+            return .systemYellow
         }
-        if purpleTile(){
-            return .purple
+        if pinkTile() {
+            return .systemPink
         }
-        return .white
+        return .white   //Return white color for Empty tiles
     }
 }

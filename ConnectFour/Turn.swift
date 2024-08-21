@@ -8,40 +8,46 @@
 import Foundation
 import UIKit
 
+//Enum to represent the current player's turn
 enum Turn {
-    case Orange
-    case Purple
+    case Yellow
+    case Pink
 }
 
-var currentTurn = Turn.Orange
+var currentTurn = Turn.Yellow   //Track whose turn it is, starting with Yellow
 
-func toggleTurn(_ turnImage: UIImageView){
-    if orangeTurn(){
-        currentTurn = Turn.Purple
-        turnImage.tintColor = .purple
+//Toggle the turn between Yellow and Pink and update the turn indicator image
+func toggleTurn(_ turnImage: UIImageView) {
+    if yellowTurn() {
+        currentTurn = Turn.Pink
+        turnImage.tintColor = .systemPink
     } else {
-        currentTurn = Turn.Orange
-        turnImage.tintColor = .systemOrange
+        currentTurn = Turn.Yellow
+        turnImage.tintColor = .systemYellow
     }
 }
 
-func orangeTurn() -> Bool {
-    return currentTurn == Turn.Orange
+//Check if it's Yellow's turn
+func yellowTurn() -> Bool {
+    return currentTurn == Turn.Yellow
 }
 
-func purpleTurn() -> Bool {
-    return currentTurn == Turn.Purple
+//Check if it's Pink's turn
+func pinkTurn() -> Bool {
+    return currentTurn == Turn.Pink
 }
 
+//Return the tile corresponding to the current turn
 func currentTurnTile() -> Tile {
-    return orangeTurn() ? Tile.Orange : Tile.Purple
+    return yellowTurn() ? Tile.Yellow : Tile.Pink
 }
 
+//Return the color corresponding to the current turn
 func currentTurnColour() -> UIColor {
-    return orangeTurn() ? .systemOrange : .purple
+    return yellowTurn() ? .systemYellow : .systemPink
 }
 
+//Return the victory message for the current turn
 func currentTurnVictoryMessage() -> String {
-    return orangeTurn() ? "Orange Wins!" : "Purple Wins!"
+    return yellowTurn() ? "Yellow Wins!" : "Pink Wins!"
 }
-
